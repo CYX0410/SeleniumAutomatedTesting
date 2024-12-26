@@ -23,7 +23,7 @@ public class TestLogin {
 
     @BeforeClass
     public void setup() {
-        System.setProperty("webdriver.gecko.driver", "C:\\Tools\\geckodriver-v0.35.0-win64\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "D:\\SeleniumDriver\\Firefoxdriver\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Initialize WebDriverWait with 30 seconds
@@ -87,31 +87,83 @@ public class TestLogin {
     }
 
     @Test
-    public void testInvalidPasswords() {
+    public void testPasswordWithNumberOnlyData() {
         try {
             String validUsername = "Admin";
-            String[] invalidPasswords = {"123456", "", "@#$#@@"};
+            String invalidPassword = "123456";
 
-            for (String invalidPassword : invalidPasswords) {
-                WebElement usernameInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
-                usernameInput.sendKeys(Keys.CONTROL + "a");
-                usernameInput.sendKeys(Keys.BACK_SPACE);
-                usernameInput.sendKeys(validUsername);
+            WebElement usernameInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+            usernameInput.sendKeys(Keys.CONTROL + "a");
+            usernameInput.sendKeys(Keys.BACK_SPACE);
+            usernameInput.sendKeys(validUsername);
 
-                WebElement passwordInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
-                passwordInput.sendKeys(Keys.CONTROL + "a");
-                passwordInput.sendKeys(Keys.BACK_SPACE);
-                passwordInput.sendKeys(invalidPassword);
+            WebElement passwordInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
+            passwordInput.sendKeys(Keys.CONTROL + "a");
+            passwordInput.sendKeys(Keys.BACK_SPACE);
+            passwordInput.sendKeys(invalidPassword);
 
-                WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']")));
-                loginButton.click();
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']")));
+            loginButton.click();
 
-                WebElement errorMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[contains(@class,'oxd-alert-content-text')]")));
-                Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid password: " + invalidPassword);
-            }
-            testResults.add("testInvalidPasswords: Passed");
+            WebElement errorMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[contains(@class,'oxd-alert-content-text')]")));
+            Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid password: " + invalidPassword);
+            testResults.add("testPasswordWithNumberOnlyData: Passed");
         } catch (Exception e) {
-            testResults.add("testInvalidPasswords: Failed");
+            testResults.add("testPasswordWithNumberOnlyData: Failed");
+        }
+    }
+
+    @Test
+    public void testPasswordWithEmptyData() {
+        try {
+            String validUsername = "Admin";
+            String invalidPassword = "";
+
+            WebElement usernameInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+            usernameInput.sendKeys(Keys.CONTROL + "a");
+            usernameInput.sendKeys(Keys.BACK_SPACE);
+            usernameInput.sendKeys(validUsername);
+
+            WebElement passwordInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
+            passwordInput.sendKeys(Keys.CONTROL + "a");
+            passwordInput.sendKeys(Keys.BACK_SPACE);
+            passwordInput.sendKeys(invalidPassword);
+
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']")));
+            loginButton.click();
+
+            WebElement errorMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[contains(@class,'oxd-alert-content-text')]")));
+            Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid password: " + invalidPassword);
+            testResults.add("testPasswordWithEmptyData: Passed");
+        } catch (Exception e) {
+            testResults.add("testPasswordWithEmptyData: Failed");
+        }
+    }
+
+    @Test
+    public void testPasswordWithSymbolOnlyData() {
+        try {
+            String validUsername = "Admin";
+            String invalidPassword = "@#$#@@";
+
+            WebElement usernameInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("username")));
+            usernameInput.sendKeys(Keys.CONTROL + "a");
+            usernameInput.sendKeys(Keys.BACK_SPACE);
+            usernameInput.sendKeys(validUsername);
+
+            WebElement passwordInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("password")));
+            passwordInput.sendKeys(Keys.CONTROL + "a");
+            passwordInput.sendKeys(Keys.BACK_SPACE);
+            passwordInput.sendKeys(invalidPassword);
+
+            WebElement loginButton = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("button[type='submit']")));
+            loginButton.click();
+
+            WebElement errorMessage = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[contains(@class,'oxd-alert-content-text')]")));
+            Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for invalid password: " + invalidPassword);
+            testResults.add("testPasswordWithSymbolOnlyData: Passed");
+        } catch (Exception e) {
+            testResults.add("testPasswordWithSymbolOnlyData: Failed");
         }
     }
 

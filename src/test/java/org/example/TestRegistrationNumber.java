@@ -72,22 +72,54 @@ public class TestRegistrationNumber {
         // Add assertions here if there's any confirmation dialog or message after saving
     }
     @Test
-    public void testRegistrationNumberWithInvalidData() {
+    public void testRegistrationWithDataSpecialCharacters() {
         WebElement regNumberInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input")));
-        String[] invalidData = {"##@", "abc", "99abc13"};
+        String invalidData = "##@";
 
-        for (String input : invalidData) {
-            regNumberInput.sendKeys(Keys.CONTROL + "a");  // Select all text
-            regNumberInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
-            regNumberInput.sendKeys(input);
-            System.out.println("Testing invalid registration number input: " + input);
-            Assert.assertNotEquals(regNumberInput.getAttribute("value"), input, "Invalid registration number input accepted: " + input);
-            System.out.println("Invalid registration number test passed for: " + input);
+        regNumberInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+        regNumberInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+        regNumberInput.sendKeys(invalidData);
+        System.out.println("Testing invalid registration number input: " + invalidData);
+        Assert.assertNotEquals(regNumberInput.getAttribute("value"), invalidData, "Invalid registration number input accepted: " + invalidData);
+        System.out.println("Invalid registration number test passed for: " + invalidData);
 
-            WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
-            saveButton.click();
-            System.out.println("Save button clicked");
-        }
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+        saveButton.click();
+        System.out.println("Save button clicked");
+    }
+
+    @Test
+    public void testRegistrationWithDataAlphabetic() {
+        WebElement regNumberInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input")));
+        String invalidData = "abc";
+
+        regNumberInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+        regNumberInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+        regNumberInput.sendKeys(invalidData);
+        System.out.println("Testing invalid registration number input: " + invalidData);
+        Assert.assertNotEquals(regNumberInput.getAttribute("value"), invalidData, "Invalid registration number input accepted: " + invalidData);
+        System.out.println("Invalid registration number test passed for: " + invalidData);
+
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+        saveButton.click();
+        System.out.println("Save button clicked");
+    }
+
+    @Test
+    public void testRegistrationWithDataAlphaNumeric() {
+        WebElement regNumberInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input")));
+        String invalidData = "99abc13";
+
+        regNumberInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+        regNumberInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+        regNumberInput.sendKeys(invalidData);
+        System.out.println("Testing invalid registration number input: " + invalidData);
+        Assert.assertNotEquals(regNumberInput.getAttribute("value"), invalidData, "Invalid registration number input accepted: " + invalidData);
+        System.out.println("Invalid registration number test passed for: " + invalidData);
+
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+        saveButton.click();
+        System.out.println("Save button clicked");
     }
 
     @Test

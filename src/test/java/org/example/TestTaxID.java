@@ -72,22 +72,54 @@ public class TestTaxID {
     }
 
     @Test
-    public void testTaxIDWithInvalidData() {
+    public void testTaxIDWithSpecialCharacters() {
         WebElement taxIDInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input")));
-        String[] invalidData = {"&@%", "efghij", "20yy67"};
+        String invalidData = "&@%";
 
-        for (String input : invalidData) {
-            taxIDInput.sendKeys(Keys.CONTROL + "a");  // Select all text
-            taxIDInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
-            taxIDInput.sendKeys(input);
-            System.out.println("Testing invalid Tax ID input: " + input);
-            Assert.assertNotEquals(taxIDInput.getAttribute("value"), input, "Invalid Tax ID input accepted: " + input);
-            System.out.println("Invalid Tax ID test passed for: " + input);
+        taxIDInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+        taxIDInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+        taxIDInput.sendKeys(invalidData);
+        System.out.println("Testing invalid Tax ID input: " + invalidData);
+        Assert.assertNotEquals(taxIDInput.getAttribute("value"), invalidData, "Invalid Tax ID input accepted: " + invalidData);
+        System.out.println("Invalid Tax ID test passed for: " + invalidData);
 
-            WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
-            saveButton.click();
-            System.out.println("Save button clicked");
-        }
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+        saveButton.click();
+        System.out.println("Save button clicked");
+    }
+
+    @Test
+    public void testTaxIDWithAlphabeticData() {
+        WebElement taxIDInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input")));
+        String invalidData = "efghij";
+
+        taxIDInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+        taxIDInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+        taxIDInput.sendKeys(invalidData);
+        System.out.println("Testing invalid Tax ID input: " + invalidData);
+        Assert.assertNotEquals(taxIDInput.getAttribute("value"), invalidData, "Invalid Tax ID input accepted: " + invalidData);
+        System.out.println("Invalid Tax ID test passed for: " + invalidData);
+
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+        saveButton.click();
+        System.out.println("Save button clicked");
+    }
+
+    @Test
+    public void testTaxIDWithAlphaNumericData() {
+        WebElement taxIDInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input")));
+        String invalidData = "20yy67";
+
+        taxIDInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+        taxIDInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+        taxIDInput.sendKeys(invalidData);
+        System.out.println("Testing invalid Tax ID input: " + invalidData);
+        Assert.assertNotEquals(taxIDInput.getAttribute("value"), invalidData, "Invalid Tax ID input accepted: " + invalidData);
+        System.out.println("Invalid Tax ID test passed for: " + invalidData);
+
+        WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+        saveButton.click();
+        System.out.println("Save button clicked");
     }
 
     @Test
