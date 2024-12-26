@@ -19,7 +19,7 @@ public class TestTaxID {
 
     @BeforeClass
     public void setup() {
-        System.setProperty("webdriver.gecko.driver", "C:\\Tools\\geckodriver-v0.35.0-win64\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "D:\\SeleniumDriver\\Firefoxdriver\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Initialize WebDriverWait with 30 seconds
