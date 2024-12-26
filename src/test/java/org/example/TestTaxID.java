@@ -13,7 +13,7 @@ import org.testng.annotations.BeforeClass;
 import java.time.Duration;
 
 @Listeners(CustomTestListener.class)
-public class TestRegistrationNumber {
+public class TestTaxID {
     WebDriver driver;
     WebDriverWait wait;
 
@@ -53,16 +53,15 @@ public class TestRegistrationNumber {
     }
 
     @Test
-    public void testRegistrationNumberWithValidData() {
-        // Step 6: Enter Valid Registration Number
-        WebElement regNumberInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input")));
+    public void testTaxIDWithValidData() {
+        WebElement taxIDInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input")));
 
-        regNumberInput.sendKeys(Keys.CONTROL + "a");  // Select all text (Ctrl + A)
-        regNumberInput.sendKeys(Keys.BACK_SPACE);    // Clear the input field
-        regNumberInput.sendKeys("9933188");
-        System.out.println("Valid Registration Number input test started");
-        Assert.assertEquals(regNumberInput.getAttribute("value"), "9933188", "Valid Registration Number was not accepted!");
-        System.out.println("Valid Registration Number input test passed");
+        taxIDInput.sendKeys(Keys.CONTROL + "a");  // Select all text (Ctrl + A)
+        taxIDInput.sendKeys(Keys.BACK_SPACE);    // Clear the input field
+        taxIDInput.sendKeys("20033");
+        System.out.println("Valid Tax ID input test started");
+        Assert.assertEquals(taxIDInput.getAttribute("value"), "20033", "Valid Tax ID was not accepted!");
+        System.out.println("Valid Tax ID input test passed");
 
         // Save Changes
         WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
@@ -71,39 +70,40 @@ public class TestRegistrationNumber {
         // Final Validation or Confirmation Message (if applicable)
         // Add assertions here if there's any confirmation dialog or message after saving
     }
+
     @Test
-    public void testRegistrationNumberWithInvalidData() {
-        WebElement regNumberInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input")));
-        String[] invalidData = {"##@", "abc", "99abc13"};
+    public void testTaxIDWithInvalidData() {
+        WebElement taxIDInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input")));
+        String[] invalidData = {"&@%", "efghij", "20yy67"};
 
         for (String input : invalidData) {
-            regNumberInput.sendKeys(Keys.CONTROL + "a");  // Select all text
-            regNumberInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
-            regNumberInput.sendKeys(input);
-            System.out.println("Testing invalid registration number input: " + input);
-            Assert.assertNotEquals(regNumberInput.getAttribute("value"), input, "Invalid registration number input accepted: " + input);
-            System.out.println("Invalid registration number test passed for: " + input);
+            taxIDInput.sendKeys(Keys.CONTROL + "a");  // Select all text
+            taxIDInput.sendKeys(Keys.BACK_SPACE);    // Clear the field
+            taxIDInput.sendKeys(input);
+            System.out.println("Testing invalid Tax ID input: " + input);
+            Assert.assertNotEquals(taxIDInput.getAttribute("value"), input, "Invalid Tax ID input accepted: " + input);
+            System.out.println("Invalid Tax ID test passed for: " + input);
 
-            WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
+            WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
             saveButton.click();
             System.out.println("Save button clicked");
         }
     }
 
     @Test
-    public void testRegistrationNumberWithEmptyData() {
-        WebElement regNumberInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id='app']/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/div[2]/input")));
-        regNumberInput.sendKeys(Keys.CONTROL + "a");
-        regNumberInput.sendKeys(Keys.BACK_SPACE);
-        System.out.println("Testing empty registration number input");
+    public void testTaxIDWithEmptyData() {
+        WebElement taxIDInput = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("/html/body/div[1]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/div[2]/input")));
+        taxIDInput.sendKeys(Keys.CONTROL + "a");
+        taxIDInput.sendKeys(Keys.BACK_SPACE);
+        System.out.println("Testing empty Tax ID input");
 
         try {
             WebDriverWait shortWait = new WebDriverWait(driver, Duration.ofSeconds(4));
-            WebElement errorMessage = shortWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[1]/div/span")));
-            Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for empty Registration Number.");
-            System.out.println("Empty registration number input test passed");
+            WebElement errorMessage = shortWait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[2]/div/div[2]/div/span")));
+            Assert.assertTrue(errorMessage.isDisplayed(), "Error message not displayed for empty Tax ID.");
+            System.out.println("Empty Tax ID input test passed");
         } catch (TimeoutException e) {
-            Assert.fail("Error message not displayed for empty Registration Number within 4 seconds.");
+            Assert.fail("Error message not displayed for empty Tax ID within 4 seconds.");
         }
 
         WebElement saveButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id=\"app\"]/div[1]/div[2]/div[2]/div/div/form/div[7]/button")));
