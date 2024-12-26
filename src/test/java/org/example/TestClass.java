@@ -1,5 +1,7 @@
 package org.example;
 
+import org.testng.annotations.Listeners;
+import org.testng.annotations.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -7,17 +9,17 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.Test;
 
 import java.time.Duration;
 
+@Listeners(CustomTestListener.class)
 public class TestClass {
     WebDriver driver;
     WebDriverWait wait;
 
     @BeforeClass
     public void setup() {
-        System.setProperty("webdriver.gecko.driver", "D:\\SeleniumDriver\\Firefoxdriver\\geckodriver.exe");
+        System.setProperty("webdriver.gecko.driver", "C:\\Tools\\geckodriver-v0.35.0-win64\\geckodriver.exe");
         driver = new FirefoxDriver();
         driver.manage().window().maximize();
         wait = new WebDriverWait(driver, Duration.ofSeconds(30)); // Initialize WebDriverWait with 30 seconds
@@ -125,7 +127,6 @@ public class TestClass {
         System.out.println("Save button clicked");
     }
 
-
     @AfterClass
     public void teardown() {
         if (driver != null) {
@@ -133,6 +134,5 @@ public class TestClass {
         }
     }
 }
-
 
 
